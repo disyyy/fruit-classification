@@ -1,10 +1,10 @@
- # 🍊 Fruit Classification: Orange vs Grapefruit
+# 🍊 Fruit Classification: Orange vs Grapefruit
 
 ## 📌 Deskripsi Proyek
 
-Proyek ini bertujuan untuk membangun model *machine learning* yang mampu mengklasifikasikan buah menjadi **orange (jeruk)** atau **grapefruit (anggur)** berdasarkan fitur numerik.
+Proyek ini bertujuan untuk membangun model *machine learning* yang mampu mengklasifikasikan buah menjadi **orange (jeruk)** atau **grapefruit** berdasarkan karakteristik fisik seperti ukuran dan warna.
 
-Model yang digunakan dan dibandingkan:
+Tiga algoritma yang digunakan:
 
 * Decision Tree
 * Naive Bayes
@@ -12,142 +12,135 @@ Model yang digunakan dan dibandingkan:
 
 ---
 
+## 🎯 Tujuan
+
+* Melakukan klasifikasi buah berbasis data numerik
+* Membandingkan performa beberapa algoritma
+* Menentukan model terbaik berdasarkan evaluasi
+
+---
+
 ## 📊 Dataset
 
-Dataset yang digunakan berasal dari Kaggle:
-Oranges vs Grapefruit Dataset
+Dataset diambil dari Kaggle: **Oranges vs Grapefruit**
 
-Dataset terdiri dari fitur:
+Fitur:
 
 * `diameter`
 * `weight`
-* `red`
-* `green`
-* `blue`
+* `red`, `green`, `blue`
 
 Target:
 
-* `name` → orange / grapefruit
+* `name` (orange / grapefruit)
 
-Jumlah data:
+Karakteristik:
 
-* ±10.000 data (balanced)
-
----
-
-## ⚙️ Tahapan Pengerjaan
-
-### 1. Data Collection
-
-Dataset diunduh dari Kaggle dan disimpan dalam folder `data/`.
+* Data seimbang
+* Tidak ada missing value
+* Cocok untuk klasifikasi
 
 ---
 
-### 2. Data Understanding (EDA)
+## 🔍 Exploratory Data Analysis (EDA)
 
-Dilakukan eksplorasi data untuk memahami:
+### 📊 Distribusi Kelas
 
-* Struktur dataset
-* Tipe data
-* Distribusi label
-* Statistik deskriptif
+Menunjukkan bahwa jumlah data untuk setiap kelas seimbang.
 
-Hasil:
-
-* Dataset tidak memiliki missing values
-* Distribusi kelas seimbang
-* Semua fitur berupa numerik
+```markdown id="img1"
+![Distribusi Kelas](images/distribusi_kelas.png)
+```
 
 ---
 
-### 3. Data Preprocessing
+### 📊 Correlation Matrix
 
-#### a. Encoding Label
+Digunakan untuk melihat hubungan antar fitur numerik.
 
-Kolom `name` diubah menjadi numerik:
+```markdown id="img2"
+![Correlation Matrix](images/correlation_matrix.png)
+```
 
-* orange → 1
-* grapefruit → 0
+Insight:
 
-#### b. Split Data
-
-Dataset dibagi menjadi:
-
-* Training set (80%)
-* Testing set (20%)
-
-#### c. Normalisasi
-
-Dilakukan standardisasi menggunakan `StandardScaler` untuk meningkatkan performa model, terutama pada SVM.
+* `diameter` dan `weight` memiliki korelasi sangat tinggi
+* Fitur warna memiliki korelasi lebih rendah
 
 ---
 
-### 4. Modeling
+## ⚙️ Preprocessing
 
-#### 🔹 Decision Tree
+Tahapan yang dilakukan:
 
-Model berbasis pohon keputusan yang mudah diinterpretasikan.
-
-#### 🔹 Naive Bayes
-
-Model probabilistik dengan asumsi independensi antar fitur.
-
-#### 🔹 Support Vector Machine (SVM)
-
-Model yang mencari hyperplane optimal untuk memisahkan data.
+* Label Encoding pada target
+* Train-test split (80:20)
+* Standardisasi menggunakan StandardScaler
 
 ---
 
-### 5. Evaluasi Model
+## 🤖 Modeling
 
-Evaluasi dilakukan menggunakan:
+Model yang digunakan:
 
-* Accuracy
-* Confusion Matrix
-* Classification Report
-
----
-
-## 📈 Hasil dan Perbandingan
-
-| Model         | Kelebihan         | Kekurangan          |
-| ------------- | ----------------- | ------------------- |
-| Decision Tree | Mudah dipahami    | Rentan overfitting  |
-| Naive Bayes   | Cepat & sederhana | Asumsi independensi |
-| SVM           | Akurasi tinggi    | Perlu scaling       |
-
-### 🔍 Insight
-
-* **SVM** memberikan performa terbaik dalam klasifikasi
-* **Naive Bayes** unggul dalam kecepatan
-* **Decision Tree** unggul dalam interpretasi
+* Decision Tree
+* Naive Bayes
+* SVM
 
 ---
 
-## 🧠 Kesimpulan
+## 📈 Hasil Evaluasi
 
-Berdasarkan hasil eksperimen, model **Support Vector Machine (SVM)** memberikan akurasi terbaik dalam mengklasifikasikan buah. Hal ini karena SVM mampu memisahkan data dengan margin optimal.
+| Model         | Accuracy  |
+| ------------- | --------- |
+| Decision Tree | **0.944** |
+| Naive Bayes   | 0.920     |
+| SVM           | 0.937     |
 
-Namun:
+---
 
-* Naive Bayes cocok untuk komputasi cepat
-* Decision Tree cocok untuk interpretasi model
+### 📊 Visualisasi Perbandingan Model
+
+```markdown id="img3"
+![Perbandingan Model](images/perbandingan_model.png)
+```
+
+---
+
+## 🧠 Analisis
+
+* Decision Tree memiliki performa terbaik karena mampu menangkap pola berbasis threshold
+* SVM menunjukkan performa yang stabil dan kompetitif
+* Naive Bayes memiliki keterbatasan karena asumsi independensi fitur
+
+---
+
+## 🧾 Kesimpulan
+
+Model **Decision Tree** merupakan pilihan terbaik untuk dataset ini, diikuti oleh SVM dan Naive Bayes.
+
+Dataset yang seimbang membantu meningkatkan performa model secara keseluruhan.
 
 ---
 
 ## 📂 Struktur Project
 
-```
+```id="1dzzlf"
 fruit-classification/
 │
 ├── data/
 │   └── citrus.csv
 │
 ├── notebook/
-│   └── eksplorasi.ipynb
+│   └── model.ipynb
 │
 ├── src/
 │   └── main.py
+│
+├── images/
+│   ├── distribusi_kelas.png
+│   ├── correlation_matrix.png
+│   └── perbandingan_model.png
 │
 ├── README.md
 └── requirements.txt
@@ -155,33 +148,21 @@ fruit-classification/
 
 ---
 
-## ▶️ Cara Menjalankan Program
+## ▶️ Cara Menjalankan
 
-1. Install dependencies:
-
-```
+```id="tgqqmt"
 pip install -r requirements.txt
-```
-
-2. Jalankan program:
-
-```
 python src/main.py
 ```
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## ✅ Status
 
-* Python
-* Pandas
-* NumPy
-* Scikit-learn
-* Matplotlib
-* Seaborn
+Program telah dijalankan tanpa error dan menghasilkan output evaluasi model.
 
 ---
 
 ## 📌 Catatan
 
-Proyek ini dibuat sebagai tugas Ujian Tengah Semester (UTS) pada mata kuliah Machine Learning.
+Dibuat sebagai tugas Ujian Tengah Semester (UTS) Machine Learning.
